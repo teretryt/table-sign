@@ -1,0 +1,17 @@
+{
+    "languages": {
+        "en": "İngilizce",
+        "tr": "Türkçe",
+        "fr": "Fransızca"
+    },
+    "langBtn": "Dİl",
+    "Header": {
+        "welcome": "Uygulamamıza hoş geldiniz!",
+        "slideMessage": "3D Tasarım atölyemizde zevkinize göre tabelalar oluşturun",
+        "language": "Dil Seçin"
+    },
+    "Footer": {
+        "newsletterHead": "Sitemizdeki gelişmelerden size e-posta ile göndermemizi ister misiniz?"
+    }
+}
+  

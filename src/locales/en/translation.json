@@ -1,0 +1,16 @@
+{
+    "languages": {
+        "en": "English",
+        "tr": "Turkish",
+        "fr": "French"
+    },
+    "langBtn": "Languages",
+    "Header": {
+        "welcome": "Welcome to our application!",
+        "slideMessage": "Create signs according to your taste in our 3D Design workshop",
+        "language": "Select Language"
+    },
+    "Footer": {
+        "newsletterHead": "Would you like us to send you e-mails about developments on our website?"
+    }
+}
