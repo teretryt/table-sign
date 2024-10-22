@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Head from "../template/Head";
 import Home from "../views/Home";
 import Workshop from "./Workshop";
+import SvgExtrudeComponent from "./SvgExtrudeComponent";
 
 function RoutePages() {
     return (
@@ -10,7 +11,7 @@ function RoutePages() {
             <Head/>
             <Routes>
                 <Route exact path="/" element={<Home/>} />
-                <Route path="/workshop" element={<Workshop/>} />
+                <Route path="/workshop" element={<SvgExtrudeComponent/>} />
             </Routes>
         </Router>
     )

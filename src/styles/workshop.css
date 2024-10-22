@@ -1,0 +1,5 @@
+.gui-front-color-btn.active,
+.gui-side-color-btn.active
+{
+    border: 2px solid orange !important;
+}
