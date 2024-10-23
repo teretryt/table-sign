@@ -12,38 +12,74 @@ function SvgExtrudeComponent() {
       const engine = new BABYLON.Engine(canvas, true);
       const scene = new BABYLON.Scene(engine);
 
-      scene.createDefaultCameraOrLight(true);
-      scene.activeCamera.attachControl(canvas, true);
+      canvas.addEventListener("mouseenter", () => {
+      document.body.style.overflow = "hidden"; // Scroll'u kapat
+    });
 
-      let  assetsManager = new BABYLON.AssetsManager(scene);
+    canvas.addEventListener("mouseleave", () => {
+      document.body.style.overflow = ""; // Scroll'u aç
+    });
 
-      //called when a single task has been sucessfull
-        assetsManager.onTaskSuccessObservable.add(function(task) {
+      const camera = new BABYLON.ArcRotateCamera("camera1", Math.PI / 2, Math.PI / 4, 4, BABYLON.Vector3.Zero(), scene);
+      camera.attachControl(canvas, true); // Kamerayı kullanıcı kontrolüne ekle
 
-            // var mesh = task.loadedMeshes[0]; //will hold the mesh that has been loaded recently
-            console.log('task successful', task);
-            console.log(task.loadedMeshes[0]);
-            task.loadedMeshes[0].normalizeToUnitCube()
-            //rotate x axis 45 degrees
-            task.loadedMeshes[0].rotation.x = -1 * Math.PI/4;
-        });
-    
-        assetsManager.onTaskErrorObservable.add(function(task) {
-            console.log('task failed', task.errorObject.message, task.errorObject.exception);
-        });
+      const light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
 
-        var loadButton = document.getElementById('loadFile');
+      const assetsManager = new BABYLON.AssetsManager(scene);
 
-        loadButton.onchange = function(evt){
-            var files = evt.target.files;
-            var filename = files[0].name;
-            var blob = new Blob([files[0]]);
-    
-            BABYLON.FilesInput.FilesToLoad[filename.toLowerCase()] = blob;
-            
-            assetsManager.addMeshTask("", "", "file:", filename);
-            assetsManager.load();
-        }; 
+      let mesh = null;
+      assetsManager.onTaskSuccessObservable.add(function (task) {
+        mesh = task.loadedMeshes[0];
+
+        // Nesneyi normalize et ve döndür
+        mesh.normalizeToUnitCube();
+
+        // Materyal ekleme
+        const material = new BABYLON.StandardMaterial('stlMaterial', scene);
+        material.diffuseColor = new BABYLON.Color3(1, 0, 0); // Kırmızı renk
+        mesh.material = material; // Materyali mesh'e ata
+      });
+
+      const loadButton = document.getElementById('loadFile');
+
+      loadButton.onchange = function (evt) {
+        const files = evt.target.files;
+        const filename = files[0].name;
+        const blob = new Blob([files[0]]);
+
+        BABYLON.FilesInput.FilesToLoad[filename.toLowerCase()] = blob;
+
+        assetsManager.addMeshTask('', '', 'file:', filename);
+        assetsManager.load();
+
+        // Dosyaları temizle
+        loadButton.value = '';
+      };
+
+      // GizmoManager ile nesneye pivot ekleme
+      const gizmoManager = new BABYLON.GizmoManager(scene);
+      gizmoManager.positionGizmoEnabled = true;
+      gizmoManager.scaleGizmoEnabled = true;
+
+      window.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Delete' && mesh) {
+          mesh.dispose(); // Mesh'i sil
+          gizmoManager.attachToMesh(null); // Mesh'ten gizmo (pivot) kaldır
+        }
+      });
+
+      // Nesneye tıklayınca seçme
+      canvas.addEventListener("pointerdown", function (evt) {
+        const pickResult = scene.pick(evt.clientX, evt.clientY);
+        if (pickResult.hit && pickResult.pickedMesh === mesh) {
+          gizmoManager.attachToMesh(pickResult.pickedMesh); // Mesh'e gizmo (pivot) ekle
+        } else {
+          //position gizmo açıkmı kontrolü
+          if (gizmoManager.gizmos.scaleGizmo.isDragging) 
+            return;
+          gizmoManager.attachToMesh(null); // Mesh'ten gizmo (pivot) kaldır
+          }
+      });
 
       engine.runRenderLoop(() => {
         scene.render();
@@ -57,8 +93,8 @@ function SvgExtrudeComponent() {
 
   return (
     <div>
-      <input id='loadFile' type="file" accept=".stl" className='my-20' />
-      <canvas style={{ width: "100%", height: "100%" }} ref={canvasRef} />
+      <input id="loadFile" type="file" accept=".stl" className="my-20" />
+      <canvas style={{ width: '100%', height: '100%' }} ref={canvasRef} />
     </div>
   );
 }

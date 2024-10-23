@@ -11,7 +11,8 @@ function RoutePages() {
             <Head/>
             <Routes>
                 <Route exact path="/" element={<Home/>} />
-                <Route path="/workshop" element={<SvgExtrudeComponent/>} />
+                <Route path="/workshop" element={<Workshop/>} />
+                <Route path="/svg-extrude" element={<SvgExtrudeComponent/>} />
             </Routes>
         </Router>
     )
