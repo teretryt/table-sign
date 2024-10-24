@@ -75,6 +75,12 @@ function Workshop() {
       document.body.style.overflow = ""; // Scroll'u aç
     });
 
+    canvas.addEventListener("keydown", (e)=>{
+      if (e.keyCode == 27)
+        if (gizmoManager)
+          gizmoManager.attachToMesh(null);
+    });
+
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("gui-front-color-btn")) {
         document.querySelectorAll(".gui-front-color-btn").forEach((btn) => {
@@ -313,9 +319,9 @@ function Workshop() {
       let t = BABYLON.MeshBuilder.CreateText(
         name,
         _text,
-        (texts[name] ? fontFamilies[texts[name]["fontFamily"]] : fontData),
+        texts[name] ? fontFamilies[texts[name]["fontFamily"]] : fontData,
         {
-          size: (texts[name] ? fontFamilies[texts[name]["fontSize"]] : fontSize),
+          size: texts[name] ? texts[name]["fontSize"] : fontSize,
           resolution: 64,
           depth: 10
         },
@@ -327,7 +333,6 @@ function Workshop() {
       if (sideFaceIsLit || singleLit)
         textMaterial.emissiveColor = BABYLON.Color3.FromHexString(textColorSide);
       textMaterial.alpha = 1;
-      
       t.material = textMaterial;
 
       if (!(name in texts))
@@ -335,10 +340,49 @@ function Workshop() {
         console.log("girrrrr");
         texts[name] = {
           "name": name,
-          "fontSize": fontSize,
-          "fontFamily": selectedFont
+          "fontSize": texts[name] ? texts[name]["fontSize"] : fontSize,
+          "fontFamily": texts[name] ? texts[name]["fontFamily"] : selectedFont,
+          "thinText": undefined
         }
       }
+
+      if (!(sideFaceIsLit && frontFaceIsLit) && !singleLit) {
+        // Mat ön yüzün arkasına ince bir metin ekle
+        const thinTextDepth = 0.09; // İnce metin kalınlığını ayarla
+        
+        thinText = BABYLON.MeshBuilder.CreateText(
+            `${name}_thinText`,
+            _text,
+            texts[name] ? fontFamilies[texts[name]["fontFamily"]] : fontData,
+            {
+                size: texts[name] ? texts[name]["fontSize"] : fontSize,
+                resolution: 64,
+                depth: thinTextDepth
+            },
+            scene
+        );
+
+        // İnce metin için mat materyali ayarla
+        const thinTextMaterial = new BABYLON.StandardMaterial(`${name}_thinText`, scene);
+        thinTextMaterial.diffuseColor = new BABYLON.Color3.FromHexString(textColorFront); // Krımızı renk
+        if (frontFaceIsLit)
+        {
+          thinTextMaterial.specularColor = new BABYLON.Color3.FromHexString(textColorFront); // Mat görünüm
+          if (!sideFaceIsLit)
+            thinTextMaterial.emissiveColor = new BABYLON.Color3.FromHexString(textColorFront); // Işık yansıması
+        }
+
+
+        thinText.material = thinTextMaterial;
+
+        // İnce metni ana metnin önüne yerleştir
+        thinText.position.z = -(4.966); // Ana metnin önüne yerleştir
+
+        texts[name]["thinText"] = `${name}_thinText`;
+        thinText.parent = t;
+        return;
+      }
+      texts[name]["thinText"] = undefined;
     }
 
     const reWriteText = (scene) => {
@@ -346,21 +390,29 @@ function Workshop() {
         const textObject = texts[t];
         if (textObject === undefined)
             continue;
-        const meshName = textObject.name; 
+        const meshName = textObject.name;
         if (!meshName)
             continue;
         const mesh = scene.getMeshByName(meshName); // Sahnedeki mesh'i name ile bul
         if (mesh)
             mesh.dispose(); // Mesh sahnede varsa sil
+        
+        const thintextObject = texts[t]["thinText"];
+        if (thintextObject === undefined)
+            continue;
+        const thinmeshName = thintextObject.name;
+        if (!thinmeshName)
+            continue;
+        const thinmesh = scene.getMeshByName(thinmeshName); // Sahnedeki mesh'i name ile bul
+        if (thinmesh)
+          thinmesh.dispose(); // Mesh sahnede varsa sil
       }
       if (background)
         background.dispose();
-      if (thinText)
-        thinText.dispose();
 
       createTextAndEvents(scene, text, "myText");
 
-      if (!(sideFaceIsLit && frontFaceIsLit) && !singleLit) {
+      /* if (!(sideFaceIsLit && frontFaceIsLit) && !singleLit) {
           // Mat ön yüzün arkasına ince bir metin ekle
         const thinTextSize = fontSize; // İnce metin boyutunu ayarla
         const thinTextDepth = 0.09; // İnce metin kalınlığını ayarla
@@ -393,7 +445,7 @@ function Workshop() {
 
         // İnce metni ana metnin önüne yerleştir
         thinText.position.z = -(4.966); // Ana metnin önüne yerleştir
-      }
+      } */
       
       if (backgroundIsVısıble){
         let backgroundMaterial = new BABYLON.StandardMaterial("backgroundMaterial", scene);
