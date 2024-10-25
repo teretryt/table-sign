@@ -65,6 +65,7 @@ function Workshop() {
     let camera = null;
     let light = null;
     let gizmoManager = null;
+    let selectedMeshName = "";
 
     // Kaydırma işlemini devre dışı bırak
     canvas.addEventListener("mouseenter", () => {
@@ -78,7 +79,10 @@ function Workshop() {
     canvas.addEventListener("keydown", (e)=>{
       if (e.keyCode == 27)
         if (gizmoManager)
+        {
           gizmoManager.attachToMesh(null);
+          selectedMeshName = "";
+        }
     });
 
     document.addEventListener("click", (e) => {
@@ -106,6 +110,8 @@ function Workshop() {
         scene.actionManager.registerAction(
           new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, function(t) {
             gizmoManager.attachToMesh(t);
+            selectedMeshName = t.name;
+            console.log(selectedMeshName);
           })
       );
 
@@ -380,12 +386,14 @@ function Workshop() {
 
         texts[name]["thinText"] = `${name}_thinText`;
         thinText.parent = t;
+
         return;
       }
       texts[name]["thinText"] = undefined;
     }
 
     const reWriteText = (scene) => {
+      gizmoManager.attachToMesh(null);
       for (let t in texts) {
         const textObject = texts[t];
         if (textObject === undefined)
@@ -411,7 +419,13 @@ function Workshop() {
         background.dispose();
 
       createTextAndEvents(scene, text, "myText");
-
+      console.log("mmm: ", selectedMeshName);
+      if (selectedMeshName.length > 0)
+      {
+        let sm = scene.getMeshByName(selectedMeshName);  
+        if (sm)
+          gizmoManager.attachToMesh(sm);
+      }
       /* if (!(sideFaceIsLit && frontFaceIsLit) && !singleLit) {
           // Mat ön yüzün arkasına ince bir metin ekle
         const thinTextSize = fontSize; // İnce metin boyutunu ayarla
