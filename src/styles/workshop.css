@@ -3,3 +3,13 @@
 {
     border: 2px solid orange !important;
 }
+
+.force-d-flex
+{
+    display: flex !important;
+}
+
+.force-d-none
+{
+    display: none !important;
+}
