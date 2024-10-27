@@ -74,7 +74,6 @@ function Workshop() {
         if (gizmoManager)
         {
           gizmoManager.attachToMesh(null);
-          representGui();
         }
     });
 
@@ -280,8 +279,6 @@ function Workshop() {
         const guiColorsFolder2 = document .getElementById("gui-colorsFolder2");
         const mainColorFolder = document.getElementById("gui-mainColorFolder");
 
-        
-        setTimeout(() => {
           if (gizmoManager && gizmoManager.attachedMesh) {
             const meshName = gizmoManager.attachedMesh.name;
             if (meshName == "background")
@@ -308,10 +305,12 @@ function Workshop() {
                     return;
                 
                 try 
-                {;
+                {
                   textAttribute.domElement.querySelector(".widget input").value = textObject.text;
                   fontSizeAttribute.domElement.querySelector(".widget input").value = textObject.fontSize;
                   fontSelection.setValue(textObject.fontFamily);
+
+                  console.log("Text Object", textObject);
                 } catch (error) {
                   console.log("Hata: ", error);
                 }
@@ -326,7 +325,6 @@ function Workshop() {
               /* AÇ KAPA */
             }
           }
-        }, 150);
     };
 
     const createScene = async () => {
@@ -463,6 +461,18 @@ function Workshop() {
       thinText.parent = t;
     }
 
+    const updateTextAndEvents = (scene, selectedMeshName) => {
+      if (!selectedMeshName)
+        return;
+      if (selectedMeshName in texts)
+      {
+        console.log("SELECTEDDDDDD", selectedMeshName);
+        texts[selectedMeshName]["text"] = textAttribute.domElement.querySelector(".widget input").value;
+        texts[selectedMeshName]["fontSize"] = fontSizeAttribute.domElement.querySelector(".widget input").value;
+        texts[selectedMeshName]["fontFamily"] = selectedFont;
+      }
+    };
+
     const reWriteText = (scene) => {
       let selectedMeshName = null;
       let selectedMesh = null;
@@ -493,6 +503,8 @@ function Workshop() {
       }
       if (background)
         background.dispose();
+
+      updateTextAndEvents(scene, selectedMeshName);
 
       createTextAndEvents(scene, selectedMeshName, "myText");
       createTextAndEvents(scene, selectedMeshName, "myText2");
