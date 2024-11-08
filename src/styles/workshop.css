@@ -1,6 +1,6 @@
 .gui-front-color-btn.active,
-.gui-side-color-btn.active
-{
+.gui-side-color-btn.active,
+.gui-side-material-btn.active {
     border: 2px solid orange !important;
 }
 
@@ -12,4 +12,20 @@
 .force-d-none
 {
     display: none !important;
+}
+
+.force-rounded-full{
+    border-radius: 9999px !important;
+}
+
+.force-p-0{
+    padding: 0 !important;
+}
+
+.force-h-full{
+    height: 100% !important;
+}
+
+.lil-gui.root > .children {
+    max-height: 450px;
 }
