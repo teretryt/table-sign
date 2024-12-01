@@ -1,0 +1,10 @@
+.thumbs-slider .swiper-slide {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.thumbs-slider .swiper-slide-thumb-active {
+    opacity: 1;
+    border: 2px solid #8f2eeb; /* Aktif slayt için stil */
+    border-radius: 13px;
+}

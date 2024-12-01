@@ -29,3 +29,7 @@
 .lil-gui.root > .children {
     max-height: 450px;
 }
+
+.lil-gui .controller.number .slider{
+    display: none;
+}

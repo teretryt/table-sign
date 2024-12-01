@@ -8,7 +8,24 @@
     "Header": {
         "welcome": "Welcome to our application!",
         "slideMessage": "Create signs according to your taste in our 3D Design workshop",
-        "language": "Select Language"
+        "language": "Select Language",
+        "nav": {
+            "Home": "Home",
+            "Workshop": "Workshop",
+            "DirectionSign": "Direction Sign",
+            "BoxLetter": "Box Letter",
+            "AboutUs": "About Us"
+        }
+    },
+    "products": {
+        "directionsign": {
+            "title": "Direction Sign",
+            "description": "Create your own direction sign with our 3D design workshop. You can choose the color, font, and size of the sign."
+        },
+        "boxletter": {
+            "title": "Box Letter",
+            "description": "Create your own box letter with our 3D design workshop. You can choose the color, font, and size of the letter."
+        }
     },
     "Footer": {
         "newsletterHead": "Would you like us to send you e-mails about developments on our website?"

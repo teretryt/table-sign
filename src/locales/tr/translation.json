@@ -8,7 +8,24 @@
     "Header": {
         "welcome": "Uygulamamıza hoş geldiniz!",
         "slideMessage": "3D Tasarım atölyemizde zevkinize göre tabelalar oluşturun",
-        "language": "Dil Seçin"
+        "language": "Dil Seçin",
+        "nav": {
+            "Home": "Ana Sayfa",
+            "Workshop": "Atölye",
+            "DirectionSign": "Yön Tabelası",
+            "BoxLetter": "Kutu Harf",
+            "AboutUs": "Hakkımızda"
+        }
+    },
+    "products": {
+        "directionsign": {
+            "title": "Yön Tabelası",
+            "description": "3D tasarım atölyemizde kendi yön tabelanızı oluşturun. Tabelanın rengini, fontunu ve boyutunu seçebilirsiniz."
+        },
+        "letterbox": {
+            "title": "Kutu Harf",
+            "description": "3D tasarım atölyemizde kendi kutu harfinizi oluşturun. Harfin rengini, fontunu ve boyutunu seçebilirsiniz."
+        }
     },
     "Footer": {
         "newsletterHead": "Sitemizdeki gelişmelerden size e-posta ile göndermemizi ister misiniz?"

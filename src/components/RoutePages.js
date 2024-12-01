@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Head from "../template/Head";
 import Home from "../views/Home";
 import Workshop from "./Workshop";
-import SvgExtrudeComponent from "./SvgExtrudeComponent";
+import ProductList from "../template/ProductList";
+import ProductPage from "../template/ProductPage";
 
 function RoutePages() {
     return (
@@ -12,7 +13,8 @@ function RoutePages() {
             <Routes>
                 <Route exact path="/" element={<Home/>} />
                 <Route path="/workshop" element={<Workshop/>} />
-                <Route path="/svg-extrude" element={<SvgExtrudeComponent/>} />
+                <Route path="/products/:productType" element={<ProductList/>} />
+                <Route path="/product" element={<ProductPage/>} />
             </Routes>
         </Router>
     )

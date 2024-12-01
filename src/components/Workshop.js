@@ -18,7 +18,7 @@ function Workshop() {
   useEffect(() => {
     const canvas = canvasRef.current;
     const addTextButton = addTextButtonRef.current;
-    const loadFileBtn = document.getElementById('loadFileBtn');
+    const loadFileBtn = document.getElementById("loadFileBtn");
     const engine = new BABYLON.Engine(canvas, true);
     const textColorList = {
       "white": "#ffffff",
@@ -36,7 +36,7 @@ function Workshop() {
     };
 
     const meterialPathList = {
-      "METAL": "http://teretryt.com:3000/textures/environment.env",
+      "METAL": "http://localhost:3000/textures/environment.env",
     };
 
     let preparedMaterials = {};
@@ -52,7 +52,8 @@ function Workshop() {
     let singleLit = false;
     let isSingleColor = false;
     let padding = 10;
-    let fontSize = 16;
+    let fontSize = 15;
+    let textDepth = 1;
     let text = "Table Sign";
     const fontFamilies = {};
     let selectedFont = "OpenSans";
@@ -70,7 +71,7 @@ function Workshop() {
     let gizmoManager = null;
     let assetsManager = null;
     /* DEFİNE ATTRİBUTES */
-    let textAttribute, bgAttribute, ssiAttribute, ffiAttribute, singleLitBtn, singleColorBtn, fontSelection, fontSizeAttribute, colorsFolder, colorsFolder2, materialFolder, mainColorFolder, caseColorFolder;
+    let textAttribute, bgAttribute, ssiAttribute, ffiAttribute, singleLitBtn, singleColorBtn, fontSelection, fontSizeAttribute, textDepthAttribute, colorsFolder, colorsFolder2, materialFolder, mainColorFolder, caseColorFolder;
 
     // Kaydırma işlemini devre dışı bırak
     canvas.addEventListener("mouseenter", () => {
@@ -145,7 +146,7 @@ function Workshop() {
       guiSetDefaults();
     });
 
-    loadFileBtn.onchange = function (evt) {
+    const handleFileSelect = (evt) => {
       const files = evt.target.files;
       const filename = files[0].name;
       const blob = new Blob([files[0]]);
@@ -158,6 +159,8 @@ function Workshop() {
       // Dosyaları temizle
       loadFileBtn.value = '';
     };
+
+    loadFileBtn.onchange = handleFileSelect;
 
     document.addEventListener("click", (e) => {
       if (e.target.classList.contains("gui-front-color-btn")) {
@@ -178,13 +181,17 @@ function Workshop() {
         });
         e.target.classList.add("active");
       }
+      /* if (e.target.getAttribute("id", "openFileBtn")) {
+        loadFileBtn.click();
+      } */
     });
 
     const guiSetDefaults = () => {
       noRender = 1;
 
       textAttribute.setValue("Table Sign");
-      fontSizeAttribute.setValue(16);
+      fontSizeAttribute.setValue(15);
+      textDepthAttribute.setValue(1);
       fontSelection.setValue("OpenSans");
       bgAttribute.setValue(false);
       ssiAttribute.setValue(false);
@@ -434,19 +441,29 @@ function Workshop() {
       }
       mainColorFolder.domElement.style.display = "none";
 
-      // Padding Slider
-      guiRef.current.add({ padding }, 'padding', 5, 50).name("İç Boşluk").onChange((value) => {
-        padding = value;
+      textDepthAttribute= guiRef.current.add({ textDepth }, 'textDepth', 0, 10).name("Metin Derinliği").onChange((value) => {
+        textDepth = value;
         if (noRender == 0)
           reWriteText(scene);
       });
+      textDepthAttribute.domElement.querySelector(".widget .slider")?.remove();
+      textDepthAttribute.domElement.querySelector(".widget input")?.setAttribute("type", "number");
+      textDepthAttribute.domElement.querySelector(".widget input")?.setAttribute("step", 1);
+      textDepthAttribute.domElement.querySelector(".widget input")?.setAttribute("min", 1);
+      textDepthAttribute.domElement.querySelector(".widget input")?.setAttribute("max", 10);
 
       // Font Size Slider
-      fontSizeAttribute = guiRef.current.add({ fontSize }, 'fontSize', 0, 50).name("Yazı Boyutu").onChange((value) => {
+      fontSizeAttribute = guiRef.current.add({ fontSize }, 'fontSize', 15, 80).name("Yazı Boyutu").onChange((value) => {
         fontSize = value;
         if (noRender == 0)
           reWriteText(scene);
       });
+      // font size attribute step 1 er er olsun
+      fontSizeAttribute.domElement.querySelector(".widget .slider")?.remove();
+      fontSizeAttribute.domElement.querySelector(".widget input")?.setAttribute("type", "number");
+      fontSizeAttribute.domElement.querySelector(".widget input")?.setAttribute("step", 1);
+      fontSizeAttribute.domElement.querySelector(".widget input")?.setAttribute("min", 15);
+      fontSizeAttribute.domElement.querySelector(".widget input")?.setAttribute("max", 80);
       guiRef.current.close();
     };
 
@@ -494,11 +511,13 @@ function Workshop() {
           try {
             textAttribute.domElement.querySelector(".widget input").value = textObject.text;
             fontSizeAttribute.domElement.querySelector(".widget input").value = textObject.fontSize;
+            textDepthAttribute.domElement.querySelector(".widget input").value = textObject.depth;
             ffiAttribute.domElement.querySelector(".widget input").checked = textObject.frontFaceLit;
             ssiAttribute.domElement.querySelector(".widget input").checked = textObject.sideFaceLit;
 
             text = textObject.text;
             fontSize = textObject.fontSize;
+            textDepth = textObject.depth;
             textColorFront = textObject.textColorFront;
             textColorSide = textObject.textColorSide;
             frontFaceIsLit = textObject.frontFaceLit;
@@ -625,7 +644,7 @@ function Workshop() {
           "microSurface": 0.96,
           "albedoColor": "#ffffff",
           "is_text_color": true,
-          "textureicon": "http://teretryt.com:3000/texture_icons/chrome.png"
+          "textureicon": "http://localhost:3000/texture_icons/chrome.png"
         },
         "p_gold_chrome": {
           "name": "gold_chrome",
@@ -636,7 +655,7 @@ function Workshop() {
           "microSurface": 0.96,
           "albedoColor": "#d4af37",
           "is_text_color": true,
-          "textureicon": "http://teretryt.com:3000/texture_icons/gold_chrome.png"
+          "textureicon": "http://localhost:3000/texture_icons/gold_chrome.png"
         },
         "p_composite": {
           "name": "composite",
@@ -654,18 +673,18 @@ function Workshop() {
           "roughness": 0.1,
           "reflectionTexture": new BABYLON.CubeTexture(meterialPathList.METAL, scene),
           "microSurface": 0.8,
-          "textureicon": "http://teretryt.com:3000/texture_icons/pleksi.png",
+          "textureicon": "http://localhost:3000/texture_icons/pleksi.png",
           "is_text_color": true
         },
       };
       //add font family example to json file
-      fontFamilies.OpenSans = await (await fetch("http://teretryt.com:3000/fonts/opensans.json")).json();
-      fontFamilies.MontserratMedium = await (await fetch("http://teretryt.com:3000/fonts/montserrat_m.json")).json();
-      fontFamilies.MontserratThin = await (await fetch("http://teretryt.com:3000/fonts/montserrat_t.json")).json();
-      fontFamilies.OrbitronMedium = await (await fetch("http://teretryt.com:3000/fonts/orbitron_m.json")).json();
-      fontFamilies.SendFlowers = await (await fetch("http://teretryt.com:3000/fonts/send_flowers.json")).json();
-      fontFamilies.SourceSerifMedium = await (await fetch("http://teretryt.com:3000/fonts/ss4m.json")).json();
-      fontFamilies.SourceSerifMediumItalic = await (await fetch("http://teretryt.com:3000/fonts/ss4mi.json")).json();
+      fontFamilies.OpenSans = await (await fetch("http://localhost:3000/fonts/opensans.json")).json();
+      fontFamilies.MontserratMedium = await (await fetch("http://localhost:3000/fonts/montserrat_m.json")).json();
+      fontFamilies.MontserratThin = await (await fetch("http://localhost:3000/fonts/montserrat_t.json")).json();
+      fontFamilies.OrbitronMedium = await (await fetch("http://localhost:3000/fonts/orbitron_m.json")).json();
+      fontFamilies.SendFlowers = await (await fetch("http://localhost:3000/fonts/send_flowers.json")).json();
+      fontFamilies.SourceSerifMedium = await (await fetch("http://localhost:3000/fonts/ss4m.json")).json();
+      fontFamilies.SourceSerifMediumItalic = await (await fetch("http://localhost:3000/fonts/ss4mi.json")).json();
 
       fontData = await fontFamilies.OpenSans;
 
@@ -699,7 +718,9 @@ function Workshop() {
       if (prop == "text")
         return "Table Sign";
       if (prop == "fontSize")
-        return 16;
+        return 15;
+      if (prop == "depth")
+        return 1;
       if (prop == "textColorFront" || prop == "textColorSide")
         return "#ffffff";
       if (prop == "frontFaceIsLit" || prop == "sideFaceIsLit" || prop == "singleLit")
@@ -741,8 +762,8 @@ function Workshop() {
         texts[name]["text"],
         fontFamilies[texts[name]["fontFamily"]],
         {
-          size: texts[name]["fontSize"],
-          resolution: 64,
+          size: (texts[name]["fontSize"] * 1.0),
+          resolution: 128,
           depth: thinTextDepth
         },
         scene
@@ -769,9 +790,9 @@ function Workshop() {
         // İnce metni ana metnin önüne yerleştir
       }
       if (texts[name]["material"]["name"] != "pleksi")
-        thinText.position.z = +(4.966); // Ana metnin arkasına yerleştir
+        thinText.position.z = +((texts[name]["depth"] / 2) - ((texts[name]["depth"] / 220.0))); // Ana metnin arkasına yerleştir
       else
-        thinText.position.z = -(4.966); // Ana metnin önüne yerleştir
+        thinText.position.z = -((texts[name]["depth"] / 2) - ((texts[name]["depth"] / 220.0))); // Ana metnin önüne yerleştir
       texts[name]["thinText"] = `${name}_thinText`;
       thinText.parent = scene.getMeshByName(name);
     };
@@ -779,6 +800,7 @@ function Workshop() {
     const createTextAndEvents = (scene, name) => {
       const correctText = texts[name] ? texts[name]["text"] : getDefault("text");
       const correctFontSize = texts[name] ? texts[name]["fontSize"] : getDefault("fontSize");
+      const correctTextDepth = texts[name] ? texts[name]["depth"] : getDefault("depth");
       const correctFrontColor = texts[name] ? texts[name]["textColorFront"] : getDefault("textColorFront");
       const correctSideColor = texts[name] ? texts[name]["textColorSide"] : getDefault("textColorSide");
       const correctFrontLit = texts[name] ? texts[name]["frontFaceLit"] : getDefault("frontFaceIsLit");
@@ -792,9 +814,9 @@ function Workshop() {
         correctText,
         texts[name] ? fontFamilies[texts[name]["fontFamily"]] : fontData,
         {
-          size: correctFontSize,
+          size: (correctFontSize * 1.0),
           resolution: 128,
-          depth: 10
+          depth: correctTextDepth
         },
         scene
       );
@@ -834,7 +856,7 @@ function Workshop() {
         texts[name] = {
           "name": name,
           "text": correctText,
-          "depth": 10,
+          "depth": correctTextDepth,
           "fontSize": correctFontSize,
           "fontFamily": selectedFont,
           "thinText": undefined,
@@ -886,6 +908,7 @@ function Workshop() {
         console.log("SELECTEDDDDDD", selectedMeshName);
         texts[selectedMeshName]["text"] = text;
         texts[selectedMeshName]["fontSize"] = fontSize;
+        texts[selectedMeshName]["depth"] = textDepth;
         texts[selectedMeshName]["fontFamily"] = selectedFont;
         texts[selectedMeshName]["textColorFront"] = textColorFront;
         texts[selectedMeshName]["textColorSide"] = textColorSide;
@@ -913,11 +936,16 @@ function Workshop() {
         const meshName = text.name;
         const textObject = texts[meshName];
         if (textObject) {
-          const textBounds = text.getBoundingInfo().boundingBox.extendSize;
           const textPosition = text.position;
-          const textWidth = textBounds.x * 2;
-          const textHeight = textBounds.y * 2;
-          const textDepth = textBounds.z * 2;
+          let textBounds = text.getBoundingInfo().boundingBox.extendSize;
+          //şimdi ise alınan ölçüleri text in fontSize ına göre oranlayarak scale edeceğiz
+          const scaleRat = ((textObject.fontSize * 1.0) / ((textBounds.y * 2 )* 1.0)).toFixed(3);
+          text.scaling = new BABYLON.Vector3(scaleRat, scaleRat, 1);
+
+          const textWidth = (textBounds.x * 2) * scaleRat;
+          const textHeight = (textBounds.y * 2) * scaleRat;
+          const textDepth = textBounds.z * 2;   
+          console.log("w: ", textWidth, " h: ", textHeight, " d: ", textDepth);
     
           // 3D metin etiketlerini oluşturma fonksiyonu
           const create3DTextLabel = (textContent, position, padding, p) => {
@@ -998,6 +1026,10 @@ function Workshop() {
         guiRef.current.destroy(); // GUI'yi temizle
         guiRef.current = null;
       }
+      if (loadFileBtn)
+      {
+        loadFileBtn.removeEventListener("change", handleFileSelect);
+      }
       engine.dispose();
     };
   }, [stateChanged]);
@@ -1007,7 +1039,7 @@ function Workshop() {
       {/* Babylon.js Canvas */}
 
       <div className="mx-auto flex justify-center w-full h-full py-24 sm:py-16 lg:py-0 lg:pt-24">
-        <div id="gui-add-menu" className="absolute flex gap-x-2 py-2 align-center left-0 bottom-24 lg:bottom-auto px-6 lg:px-8">
+        <div id="gui-add-menu" className="absolute flex gap-x-2 py-2 align-center left-0 bottom-24 lg:bottom-auto px-8 lg:px-10">
           <button ref={addTextButtonRef} className="bg-slate-800 text-white p-2 rounded-md">+ Metin Ekle</button>
           {/* LOAD STL MODEL */}
           <input id="loadFileBtn" type="file" accept=".stl" className="bg-slate-800 p-2" />

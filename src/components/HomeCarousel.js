@@ -7,6 +7,19 @@ function HomeCarousel() {
     const { t } = useTranslation();
 
     return (
+      <>
+        <div 
+          style={{
+            position: 'absolute',
+            backgroundImage: 'url(https://teretryt.com/kOLAJ.png)',
+            height: '100%',
+            width: '100%',
+            backgroundPosition: 'center',
+            backgroundSize: '100% 100%',
+            backgroundRepeat: 'no-repeat',
+            filter: 'brightness(0.8)'
+          }}
+        ></div>
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
@@ -65,6 +78,7 @@ function HomeCarousel() {
             />
           </div>
       </div>
+      </>
     )
 }
 
