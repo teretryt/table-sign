@@ -5,6 +5,29 @@
 
 .thumbs-slider .swiper-slide-thumb-active {
     opacity: 1;
-    border: 2px solid #8f2eeb; /* Aktif slayt için stil */
     border-radius: 13px;
+}
+
+.abc{
+    width: 250px !important;
+}
+
+.active-model
+{
+    border: 2px solid orange;
+    border-radius: 12px;
+}
+
+#modelContainer::-webkit-scrollbar{
+    width: 6px;
+}
+
+#modelContainer::-webkit-scrollbar-track
+{
+    background: #b4b4b4 !important;
+}
+
+#modelContainer::-webkit-scrollbar-thumb
+{
+    background: rgb(236, 49, 49) !important;
 }

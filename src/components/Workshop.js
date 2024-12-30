@@ -820,6 +820,12 @@ function Workshop() {
         },
         scene
       );
+
+      //GERÇEK ÖLÇÜLERE ORANLAMA
+      let textBounds = t.getBoundingInfo().boundingBox.extendSize;
+      const scaleRat = ((correctFontSize * 1.0) / ((textBounds.y * 2 )* 1.0)).toFixed(3);
+      t.scaling = new BABYLON.Vector3(scaleRat, scaleRat, 1);
+
       if (texts[name]) {
         t.position.x = texts[name]["x"];
         t.position.y = texts[name]["y"];

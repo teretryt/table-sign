@@ -6,7 +6,9 @@
     },
     "langBtn": "Dil",
     "Header": {
-        "welcome": "Uygulamamıza hoş geldiniz!",
+        "welcome": "TableSign 'a hoş geldiniz!",
+        "about": "Hakkımızda",
+        "aboutWorkshop": "Atölye Nasıl Kullanılır ?",
         "slideMessage": "3D Tasarım atölyemizde zevkinize göre tabelalar oluşturun",
         "language": "Dil Seçin",
         "nav": {
@@ -14,7 +16,8 @@
             "Workshop": "Atölye",
             "DirectionSign": "Yön Tabelası",
             "BoxLetter": "Kutu Harf",
-            "AboutUs": "Hakkımızda"
+            "AboutUs": "Hakkımızda",
+            "login": "Oturum Aç"
         }
     },
     "products": {
@@ -27,8 +30,48 @@
             "description": "3D tasarım atölyemizde kendi kutu harfinizi oluşturun. Harfin rengini, fontunu ve boyutunu seçebilirsiniz."
         }
     },
+    "ppage": {
+        "addToCart": "Sepete Ekle",
+        "buyNow": "Satın Al",
+        "color1": "1. Renk",
+        "color2": "2. Renk",
+        "ledColor": "Led Işık Rengi",
+        "file": "UV Desen",
+        "model": "Hazır Model",
+        "letterHeight": "Harf Yüksekliği(cm)",
+        "technicalDetails": "Teknik Detaylar"
+    },
+    "cartPage": {
+        "cart": "Sepet",
+        "product": "Ürün",
+        "productDetails": "Ürün Detayları",
+        "price": "Fiyat",
+        "quantity": "Adet",
+        "total": "Toplam",
+        "remove": "Kaldır",
+        "emptyCart": "Sepette Ürün Yok",
+        "checkout": "Ödeme Yap",
+        "orderSummary": "Sipariş Özeti",
+        "promoCode": "Promosyon Kodu",
+        "addCouponCode": "Kupon Kodu Ekle",
+        "recipientInformation": "Alıcı Bilgileri",
+        "recipientName": "Ad Soyad",
+        "recipientPhone": "Telefon",
+        "recipientMail": "E-posta",
+        "card": {
+            "cardInformation": "Kart Bilgileri",
+            "cardNumber": "Kart Numarası",
+            "cardName": "Kart Üzerindeki İsim",
+            "cardExp": "Son Kullanma Tarihi",
+            "cardCvc": "CVC"
+        }
+    },
     "Footer": {
-        "newsletterHead": "Sitemizdeki gelişmelerden size e-posta ile göndermemizi ister misiniz?"
+        "social": {
+            "description": "TabelaSign'i sosyal medyada takip edin"
+        },
+        "newsletterHead": "Sitemizdeki gelişmelerden size e-posta ile göndermemizi ister misiniz?",
+        "subscribe": "Abone Ol"
     }
 }
   

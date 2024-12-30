@@ -6,7 +6,9 @@
     },
     "langBtn": "Languages",
     "Header": {
-        "welcome": "Welcome to our application!",
+        "welcome": "Welcome to TableSign!",
+        "about": "Hakkımızda",
+        "aboutWorkshop": "About Workshop",
         "slideMessage": "Create signs according to your taste in our 3D Design workshop",
         "language": "Select Language",
         "nav": {
@@ -22,12 +24,32 @@
             "title": "Direction Sign",
             "description": "Create your own direction sign with our 3D design workshop. You can choose the color, font, and size of the sign."
         },
-        "boxletter": {
+        "letterbox": {
             "title": "Box Letter",
             "description": "Create your own box letter with our 3D design workshop. You can choose the color, font, and size of the letter."
         }
     },
+    "ppage": {
+        "addToCart": "Add to Cart",
+        "buyNow": "Buy Now",
+        "color": "Color",
+        "model": "Model",
+        "letterHeight": "Letter Height(cm)",
+        "technicalDetails": "Technical Details"
+    },
+    "cartPage": {
+        "cart": "Cart",
+        "product": "Product",
+        "productDetails": "Product Details",
+        "price": "Price",
+        "quantity": "Quantity",
+        "total": "Total",
+        "remove": "Remove",
+        "emptyCart": "Empty Cart",
+        "checkout": "Checkout"
+    },
     "Footer": {
-        "newsletterHead": "Would you like us to send you e-mails about developments on our website?"
+        "newsletterHead": "Would you like us to send you e-mails about developments on our website?",
+        "subscribe": "Subscribe"
     }
 }

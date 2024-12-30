@@ -8,6 +8,9 @@ module.exports = {
       grayscale: {
         25: '25%',
         50: '50%',
+      },
+      left: {
+        68: '19rem'
       }
     },
   },
