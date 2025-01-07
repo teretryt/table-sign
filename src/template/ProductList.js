@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next";
 import swal from "sweetalert";
 
 function ProductList() {
-    const API_URL = "https://teretryt.com/v1/api";
-    const serverUrl = "https://teretryt.com";
+    const API_URL = "v1/api";
+    const SERVER_URL = "https://tabelasign.com";
     const { productType } = useParams();
     const { t } = useTranslation();
     const [filterOpen, setFilterOpen] = useState(false);
+    const [loadState, setLoadState] = useState("Yükleniyor...")
 
     const [ProductList, setProductList] = useState([]);
 
@@ -78,10 +79,29 @@ function ProductList() {
     }
 
     /* USE EFFECT İLE GRAPHQL API POST GÖNDERİP VERİLER ÇEKİLİP BURADAKİ ÖRNEKLER GİBİ LİSTELENECEK */
+    const fetchWithTimeout = async (url, options, timeout = 5000) => {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+    
+        try {
+            const response = await fetch(url, {
+                ...options,
+                signal: controller.signal,
+            });
+            clearTimeout(timeoutId);
+            return response;
+        } catch (error) {
+            if (error.name === "AbortError") {
+                throw new Error("Request timed out");
+            }
+            throw error;
+        }
+    };
+
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`${API_URL}/${productType}`, {
+                const response = await fetchWithTimeout(`${SERVER_URL}/${API_URL}/${productType}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -102,10 +122,12 @@ function ProductList() {
                             }
                         `,
                     }),
-                });
+                }, );
     
-                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    
+                if (!response.ok){
+                    setLoadState("Ürün Bulunamadı")    
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const data = await response.json();
                 
                 /* data.data.letterbox = data.data.letterbox.slice(0, 2); */
@@ -161,7 +183,7 @@ function ProductList() {
                      (ProductList.data.letterbox.filter(product => product.visibility).map((product) => (
                         <NavLink to={`/products/${productType}/` + product.id} key={product.id} className="max-w-[320px] mx-auto">
                             <div className="w-full max-w-sm aspect-square">
-                                <img src={serverUrl + product.files[product.selected_image]} alt={product.name} className="w-full h-full rounded-xl object-cover"/>
+                                <img src={SERVER_URL + product.files[product.selected_image]} alt={product.name} className="w-full h-full rounded-xl object-cover"/>
                             </div>
                             {/* ETİKET GİBİ badge eklenecek */}
                             <div className="">
@@ -201,7 +223,7 @@ function ProductList() {
                                 </div>
                             </div>
                         </NavLink>
-                    ))) : (<h1 className="text-gray-600 text-3xl">Yükleniyor...</h1>)}
+                    ))) : (<h1 className="text-gray-600 text-3xl">{loadState}</h1>)}
                 </div>
             </div>
         </section>

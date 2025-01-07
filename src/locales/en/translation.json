@@ -6,7 +6,7 @@
     },
     "langBtn": "Languages",
     "Header": {
-        "welcome": "Welcome to TableSign!",
+        "welcome": "Welcome to TabelaSign!",
         "about": "Hakkımızda",
         "aboutWorkshop": "About Workshop",
         "slideMessage": "Create signs according to your taste in our 3D Design workshop",
@@ -16,7 +16,8 @@
             "Workshop": "Workshop",
             "DirectionSign": "Direction Sign",
             "BoxLetter": "Box Letter",
-            "AboutUs": "About Us"
+            "AboutUs": "About Us",
+            "cart": "Cart"
         }
     },
     "products": {

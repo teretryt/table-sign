@@ -217,7 +217,7 @@ function Footer () {
                 <br />
 
                 Created by
-                <a href="https://www.teretryt.com" className="text-gray-700 underline transition hover:text-gray-700/75"> teret</a>
+                <a href="#" className="text-gray-700 underline transition hover:text-gray-700/75"> teret</a>
             </p>
             </div>
         </div>

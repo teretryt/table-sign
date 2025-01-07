@@ -6,7 +6,7 @@
     },
     "langBtn": "Dil",
     "Header": {
-        "welcome": "TableSign 'a hoş geldiniz!",
+        "welcome": "TabelaSign 'a hoş geldiniz!",
         "about": "Hakkımızda",
         "aboutWorkshop": "Atölye Nasıl Kullanılır ?",
         "slideMessage": "3D Tasarım atölyemizde zevkinize göre tabelalar oluşturun",
@@ -17,7 +17,8 @@
             "DirectionSign": "Yön Tabelası",
             "BoxLetter": "Kutu Harf",
             "AboutUs": "Hakkımızda",
-            "login": "Oturum Aç"
+            "login": "Oturum Aç",
+            "cart": "Sepet"
         }
     },
     "products": {

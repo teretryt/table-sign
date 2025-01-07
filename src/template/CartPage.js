@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 
 const CartPage = () => {
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')) || []);
-    const SERVER_URI = 'https://teretryt.com';
-    const API_URL = 'https://teretryt.com/v1/api';
+    const SERVER_URI = 'https://tabelasign.com';
+    const API_URL = 'v1/api';
     const [fetchedProducts, setFetchedProducts] = useState([]);
     const { t } = useTranslation();
 

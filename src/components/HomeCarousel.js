@@ -41,8 +41,8 @@ function HomeCarousel() {
                   {t('Header.slideMessage')}
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-gray-900">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
-                  fugiat veniam occaecat fugiat aliqua.
+                  3D Atölyemizde dilediğiniz Kutu Harf ve Tabelaları tasarlayıp önizleme yapabilme ayrıcalığına sahipsiniz.
+                  <b>Tam Sürüm Çok Yakında - TabelaSign </b> 
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <Button

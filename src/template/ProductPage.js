@@ -15,8 +15,8 @@ import swal from 'sweetalert';
 SwiperCore.use([Navigation, Thumbs]); // Swiper modüllerini kullanıma dahil edin
 
 function ProductPage() {
-    const SERVER_URI = "https://teretryt.com";
-    const API_URL = "https://teretryt.com/v1/api";
+    const SERVER_URL = "https://tabelasign.com";
+    const API_URL = "v1/api";
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
     const productCategory = useParams().category;
     const productId = useParams().id;
@@ -40,7 +40,7 @@ function ProductPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await fetch(`${API_URL}/${productCategory}`, {
+                const response = await fetch(`${SERVER_URL}/${API_URL}/${productCategory}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -222,7 +222,7 @@ function ProductPage() {
                             {product && product.files.map((file, index) => (
                                 /* centered image */
                                 <SwiperSlide key={index}>
-                                    <img src={SERVER_URI + file}
+                                    <img src={SERVER_URL + file}
                                         alt="Summer Travel Bag image" className="h-[600px] w-full object-cover"/>
                                 </SwiperSlide>
 
@@ -241,7 +241,7 @@ function ProductPage() {
                         >
                             {product && product.files.map((file, index) => (
                                 <SwiperSlide key={index}>
-                                    <img src={SERVER_URI + file}
+                                    <img src={SERVER_URL + file}
                                         alt="Summer Travel Bag image" className="h-[100px] w-full object-cover"/>
                                 </SwiperSlide>
                             ))}
@@ -339,7 +339,7 @@ function ProductPage() {
                                 {product && product.files.map((file, index) => (
                                     <div className="color-box group" key={index}>
                                         <div>
-                                            <img src={SERVER_URI + file}
+                                            <img src={SERVER_URL + file}
                                                 alt="Summer Travel Bag image"
                                                 className="model-image min-[400px]:h-[100px] aspect-square border-2 border-gray-100 rounded-xl transition-all duration-500 group-hover:border-orange-600 object-cover"
                                                 onClick={handleModelClick}

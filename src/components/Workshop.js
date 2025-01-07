@@ -36,7 +36,7 @@ function Workshop() {
     };
 
     const meterialPathList = {
-      "METAL": "http://localhost:3000/textures/environment.env",
+      "METAL": "textures/environment.env",
     };
 
     let preparedMaterials = {};
@@ -54,7 +54,7 @@ function Workshop() {
     let padding = 10;
     let fontSize = 15;
     let textDepth = 1;
-    let text = "Table Sign";
+    let text = "Tabela Sign";
     const fontFamilies = {};
     let selectedFont = "OpenSans";
 
@@ -189,7 +189,7 @@ function Workshop() {
     const guiSetDefaults = () => {
       noRender = 1;
 
-      textAttribute.setValue("Table Sign");
+      textAttribute.setValue("Tabela Sign");
       fontSizeAttribute.setValue(15);
       textDepthAttribute.setValue(1);
       fontSelection.setValue("OpenSans");
@@ -644,7 +644,7 @@ function Workshop() {
           "microSurface": 0.96,
           "albedoColor": "#ffffff",
           "is_text_color": true,
-          "textureicon": "http://localhost:3000/texture_icons/chrome.png"
+          "textureicon": "texture_icons/chrome.png"
         },
         "p_gold_chrome": {
           "name": "gold_chrome",
@@ -655,7 +655,7 @@ function Workshop() {
           "microSurface": 0.96,
           "albedoColor": "#d4af37",
           "is_text_color": true,
-          "textureicon": "http://localhost:3000/texture_icons/gold_chrome.png"
+          "textureicon": "texture_icons/gold_chrome.png"
         },
         "p_composite": {
           "name": "composite",
@@ -673,18 +673,18 @@ function Workshop() {
           "roughness": 0.1,
           "reflectionTexture": new BABYLON.CubeTexture(meterialPathList.METAL, scene),
           "microSurface": 0.8,
-          "textureicon": "http://localhost:3000/texture_icons/pleksi.png",
+          "textureicon": "texture_icons/pleksi.png",
           "is_text_color": true
         },
       };
       //add font family example to json file
-      fontFamilies.OpenSans = await (await fetch("http://localhost:3000/fonts/opensans.json")).json();
-      fontFamilies.MontserratMedium = await (await fetch("http://localhost:3000/fonts/montserrat_m.json")).json();
-      fontFamilies.MontserratThin = await (await fetch("http://localhost:3000/fonts/montserrat_t.json")).json();
-      fontFamilies.OrbitronMedium = await (await fetch("http://localhost:3000/fonts/orbitron_m.json")).json();
-      fontFamilies.SendFlowers = await (await fetch("http://localhost:3000/fonts/send_flowers.json")).json();
-      fontFamilies.SourceSerifMedium = await (await fetch("http://localhost:3000/fonts/ss4m.json")).json();
-      fontFamilies.SourceSerifMediumItalic = await (await fetch("http://localhost:3000/fonts/ss4mi.json")).json();
+      fontFamilies.OpenSans = await (await fetch("fonts/opensans.json")).json();
+      fontFamilies.MontserratMedium = await (await fetch("fonts/montserrat_m.json")).json();
+      fontFamilies.MontserratThin = await (await fetch("fonts/montserrat_t.json")).json();
+      fontFamilies.OrbitronMedium = await (await fetch("fonts/orbitron_m.json")).json();
+      fontFamilies.SendFlowers = await (await fetch("fonts/send_flowers.json")).json();
+      fontFamilies.SourceSerifMedium = await (await fetch("fonts/ss4m.json")).json();
+      fontFamilies.SourceSerifMediumItalic = await (await fetch("fonts/ss4mi.json")).json();
 
       fontData = await fontFamilies.OpenSans;
 
