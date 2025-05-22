@@ -36,7 +36,7 @@ function Workshop() {
     };
 
     const meterialPathList = {
-      "METAL": "textures/environment.env",
+      "METAL": "https://tabelasign.com/textures/environment.env",
     };
 
     let preparedMaterials = {};
@@ -763,7 +763,7 @@ function Workshop() {
         fontFamilies[texts[name]["fontFamily"]],
         {
           size: (texts[name]["fontSize"] * 1.0),
-          resolution: 128,
+          resolution: 32,
           depth: thinTextDepth
         },
         scene
@@ -815,7 +815,7 @@ function Workshop() {
         texts[name] ? fontFamilies[texts[name]["fontFamily"]] : fontData,
         {
           size: (correctFontSize * 1.0),
-          resolution: 128,
+          resolution: 32,
           depth: correctTextDepth
         },
         scene
@@ -962,7 +962,7 @@ function Workshop() {
               fontFamilies.OpenSans,
               {
                 size: 5,
-                resolution: 64,
+                resolution: 32,
                 depth: 1,
                 faceColors: [new BABYLON.Color4(0, 1, 1, 1)]
               },
